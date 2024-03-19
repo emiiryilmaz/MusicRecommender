@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Müzik Önerisi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-image: url('https://img.wallpapic.com/i5141-425-149/medium/muzik-yesil-siyah-isik-duvar-kagidi.jpg'); /* Arka plan resminin dosya adını buraya ekleyin */
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .search-bar {
+            margin-right: 10px; /* Button ve input arasındaki mesafe artırıldı */
+            padding: 15px; /* Yükseklik arttırıldı */
+            width: 600px; /* Genişlik arttırıldı */
+            border: 2px solid #682323; /* Beyaz renkli 2px kalınlığında çerçeve eklendi */
+            border-radius: 10px; /* Köşe yuvarlatma eklendi */
+            font-size: 18px; /* Yazı boyutu arttırıldı */
+            color: #333; /* Yazı rengi değiştirildi */
+            background-color: rgba(255, 255, 255, 0.5); /* Arka plan rengi belirginleştirildi */
+        }
+
+        .submit-button {
+            padding: 10px;
+            background-color: #6a8986;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 24px;
+            width: 90px;
+        }
+
+        .recommendations {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Recommendation</h1>
+        <form action="/recommend" method="POST">
+            <input type="text" name="music_search" class="search-bar" placeholder="Müzik ara...">
+            <button type="submit" class="submit-button">Seç </button>
+        </form>
+        <div class="recommendations">
+            <!-- Burada Flask tarafından döndürülen önerileri göstermek için bir yapı ekleyebilirsiniz -->
+        </div>
+    </div>
+ 
+</body>
+</html>
