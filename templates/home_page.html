@@ -93,11 +93,15 @@
             <a href="/about">Hakkımızda</a>
         </div>
         <div class="right">
-            <a href="{{ url_for('login') }}">Giriş Yap</a>
-            <a href="{{ url_for('register') }}">Üye Ol</a>
+            {% if 'username' in session %}
+                <a href="/logout">Çıkış Yap</a>
+            {% else %}
+                <a href="/register">Giriş Yap</a>
+            {% endif %}
         </div>
-        
     </div>
+    
+    
     
     <div class="search-container">
         <input type="text" placeholder="Ara...">
