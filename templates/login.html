@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin: 100px auto;
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form action="/login" method="post" onsubmit="return validateForm()">
+        <h2>Login</h2>
+        <input type="text" name="username" placeholder="Kullanıcı Adı" required>
+        <input type="password" name="password" placeholder="Şifre" required>
+        <input type="submit" value="Giriş Yap">
+    </form>
+
+    <script>
+        function validateForm() {
+            var username = document.forms[0]["username"].value;
+            var password = document.forms[0]["password"].value;
+
+            if (username == "" || password == "") {
+                alert("Lütfen kullanıcı adı ve şifre giriniz.");
+                return false;
+            }
+            return true;
+        }
+        var errorMessage = "{{ get_flashed_messages() }}";
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    </script>
+</body>
+</html>
