@@ -9,10 +9,13 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
+            background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");  
         }
         form {
             margin: 100px auto;
-            width: 300px;
+            background-color: #f2ece8;
+            width: auto; /* Genişliği otomatik olarak ayarla */
+            max-width: 300px; /* Maksimum genişlik */
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -25,9 +28,10 @@
             color: #333;
         }
         input[type="text"],
+        input[type="name"],
         input[type="email"],
         input[type="password"] {
-            width: calc(100% - 20px);
+            width: calc(100% - 22px); /* Sol ve sağ kenar boşluklarını ve çerçeve genişliğini ayarla */
             padding: 10px;
             margin: 10px 0;
             box-sizing: border-box;
@@ -46,7 +50,7 @@
             padding: 10px;
             margin: 10px 0;
             box-sizing: border-box;
-            background-color: #4CAF50;
+            background-color: #f83131;
             color: white;
             border: none;
             border-radius: 3px;
@@ -54,9 +58,12 @@
             transition: background-color 0.3s;
         }
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #390a0a;
         }
     </style>
+    
+    
+    
 </head>
 <body>
     <form action="/register" method="post">

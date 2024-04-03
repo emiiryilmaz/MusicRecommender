@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden; /* Sayfa yüklendiğinde önceki içeriği gizler */
+            background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");       
+                }
+
+        .container {
+            opacity: 0; /* Başlangıçta içeriği görünmez yapar */
+            transition: opacity 1s ease; /* Geçiş efekti için animasyon tanımlar */
+        }
+
+        /* İçerik görünür olduğunda opacity'yi 1 yapar */
+        .container.show {
+            opacity: 1;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            line-height: 1.6;
+            color: #333;
+            opacity: 0; /* Paragrafları başlangıçta görünmez yapar */
+            transition: opacity 0.5s ease; /* Geçiş efekti için animasyon tanımlar */
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>About Us</h1>
+            <p>
+                Müzik dünyasında yeni keşifler yapmak ve tarzınıza uygun şarkıları bulmak bazen zor olabilir. Ancak artık, Müzik Seç ve Öner sistemi ile bu süreç çok daha kolay ve keyifli hale geliyor. Biz, benzersiz müzik zevkinizi anlamak ve size en uygun şarkıları sunmak için buradayız.
+            </p>
+            <p>
+                Müzik Seç ve Öner, sizin seçtiğiniz bir şarkıya dayanarak, tarzınıza ve tercihlerinize en yakın olanları öneren bir sistemdir. Siz bir şarkıyı seçin, biz de size o şarkıya en yakın olanları bulalım. Gelişmiş algoritmalarımız sayesinde, size tam olarak istediğiniz tarzda müzikler sunuyoruz.
+            </p>
+            <p>
+                Sadece sevdiğiniz bir şarkıyı seçin, gerisini bize bırakın. Müzik Seç ve Öner ile yeni favoriler keşfetmek ve müzik zevkinizi genişletmek artık çok daha kolay. Her seçiminizle size en uygun önerileri sunuyoruz ve müzik deneyiminizi daha da zenginleştiriyoruz.
+            </p>
+            <p>
+                Müzik dünyasında sınırsız seçenekler arasında kaybolmadan, tarzınıza uygun şarkıları bulmak artık çok daha kolay. Müzik Seç ve Öner ile müzik deneyiminizi kişiselleştirin ve her anınızı müzikle renklendirin.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde paragrafları sırasıyla göstermek için JavaScript kullanılır
+        document.addEventListener("DOMContentLoaded", function() {
+            const container = document.querySelector('.container');
+            container.classList.add('show');
+
+            const paragraphs = document.querySelectorAll('.content p');
+            let delay = 0;
+            paragraphs.forEach(paragraph => {
+                setTimeout(() => {
+                    paragraph.style.opacity = '1';
+                }, delay);
+                delay += 1000; // Her paragrafın gösterilme süresini 0.5 saniye artırır
+            });
+        });
+    </script>
+</body>
+</html>

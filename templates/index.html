@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ana Sayfa</title>
     <style>
+        body{
+            background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");      
+        }
         /* Navbar stilleri */
         .navbar {
             background-color: #f2ece8; /* Pastel pembe */
             overflow: hidden;
-            padding: 20px; /* Navbar içeriğinin kenar boşlukları */
+            padding: 10px; /* Navbar içeriğinin kenar boşlukları */
             box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Gölgelendirme */
             position: fixed; /* Sabit navbar */
             top: 0; /* En üstte */
@@ -39,13 +42,19 @@
 
         /* Arama kutusunun ve butonun stilleri */
         .search-container {
-            text-align: center; /* Metni ortala */
-            margin-top: 80px; /* Üst boşluk */
-            position: relative; /* Göreceli pozisyon */
-        }
+        text-align: center; /* Metni ortala */
+        margin: 100px auto; /* Ekranın ortasına almak için margin kullan */
+        background-color: #f2ece8; /* Krem rengi */
+        padding: 20px; /* İçeriği kenarlardan ayırmak için padding kullan */
+        border-radius: 10px; /* Köşeleri yuvarla */
+        width: 50%; /* Genişlik ayarla */
+        height: 200px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hafif gölgelendirme */
+    }
 
         .search-container select {
             width: 300px; /* Arama kutusu genişliği */
+            margin-bottom: 5px;
             padding: 10px; /* Yatay ve dikey boşluklar */
             border-radius: 25px; /* Köşeleri yuvarla */
             border: 2px solid #ccc; /* Kenar çizgisi */
@@ -60,7 +69,8 @@
 
         /* Arama butonunun stilleri */
         .search-container button {
-            background-color: #007bff; /* Mavi */
+            margin-left: 25px;
+            background-color: #f83232; /* Mavi */
             color: white; /* Yazı rengi */
             padding: 10px 20px; /* Yatay ve dikey boşluklar */
             border: none; /* Kenar çizgisi yok */
@@ -133,7 +143,7 @@
         </div>
         <div class="right">
             {% if 'username' in session %}
-                <span class="username">Hoşgeldin, {{ session['username'] }}</span>
+                <span class="username">Hoşgeldin {{ session['username'] }}</span>
                 <a href="/logout">Çıkış Yap</a>
             {% else %}
                 <a href="/login">Giriş Yap</a>
@@ -145,8 +155,9 @@
     <div class="search-container">
         <select id="searchSelect" onchange="search()">
             <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
+            <button type="button" onclick="showPopup()">Öner</button>
         </select>
-        <button type="button" onclick="showPopup()">Ara</button>
+        <button type="button" onclick="showPopup()">Öner</button>
     </div>
 
     <div id="popup" class="popup">

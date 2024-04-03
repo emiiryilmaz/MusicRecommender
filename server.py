@@ -58,8 +58,12 @@ def register():
 
     return render_template('register.html')
 
+from flask import request, render_template  # render_template import edilmeli
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error_message = None
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -70,9 +74,9 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            flash('Invalid username or password. Please try again.', 'danger')
+            error_message = 'Invalid username or password. Please try again.'
 
-    return render_template('login.html')
+    return render_template('login.html', error_message=error_message)  # render_template ile error_message değişkeni template'e gönderilmeli
 
 @app.route('/logout')
 def logout():
@@ -85,6 +89,11 @@ def success():
         return "Başarıyla giriş yaptınız!"
     else:
         return redirect(url_for('login'))
+    
+    
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+ return render_template('about.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
