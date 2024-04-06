@@ -1,3 +1,4 @@
+import json
 from flask import Flask, jsonify, render_template, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 import numpy as np
@@ -9,24 +10,29 @@ db = client['MusicRecommender']  # MongoDB veritabanı adınızı değiştirin
 users_collection = db['users']
 songs_collection = db['songs']
 
+json_file = "song_info.json"  
+with open(json_file, 'r') as file:
+    json_data = json.load(file)
 @app.route('/get_similar_songs', methods=['POST'])
 def get_similar_songs():
-    selected_file = request.json.get('filename')
-
-    # most_similar_Arrays.npy dosyasından en benzer 5 şarkıyı bul
-    most_similar_data = np.load('most_similar_arrays.npy', allow_pickle=True).item()
-    similar_songs = most_similar_data[selected_file]
-
-    # Benzer şarkıların başlık ve sanatçı bilgilerini alma ve kullanıcıya gösterme
+    selected_file = request.json.get('file')
+    data_dict = np.load('most_similar_arrays.npy', allow_pickle=True).item()
     similar_song_info = []
-    for similar_song in similar_songs:
-        for song in songs_collection.find():
-            if song['file'] == similar_song:
-                title = song['title']
-                artist = song['artist']
-                similarity_score = similar_songs[similar_song]
-                similar_song_info.append({"title": title, "artist": artist, "similarity_score": similarity_score})
+
+    for similar_song in data_dict[selected_file]:
+        similar_filename = similar_song[0]
+        similar_title = None
+        similar_artist = None
+
+        for item in json_data:
+            if item["file"] == similar_filename:
+                similar_title = item["title"]
+                similar_artist = item["artist"]
                 break
+
+        if similar_title is not None and similar_artist is not None:
+            similar_song_info.append({"title": similar_title, "artist": similar_artist})
+
     return jsonify(similar_song_info)
 
 @app.route('/get_songs', methods=['GET'])

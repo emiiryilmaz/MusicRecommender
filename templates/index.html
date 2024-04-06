@@ -188,24 +188,26 @@ function search() {
     var selectedFileName = select.options[select.selectedIndex].value;
 
     fetch('/get_similar_songs', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ file: selectedFileName }) // 'filename' yerine 'file'
-    })
-    .then(response => response.json())
-    .then(data => {
-        var popupContent = "<ul>"; // Pop-up içeriğini oluştur
-        data.similar_songs.forEach(song => {
-            popupContent += `<li><strong>Title:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}, <strong>Benzerlik Skoru:</strong> ${song.similarity_score}</li>`;
-        });
-        popupContent += "</ul>";
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ file: selectedFileName })
+})
+.then(response => response.json())
+.then(data => {
+    // Pop-up içeriğini oluştur
+    var popupContent = "<ul>";
+    data.forEach(song => {
+        popupContent += `<li><strong>Title:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}, <strong>Benzerlik Skoru:</strong> ${song.similarity_score}</li>`;
+    });
+    popupContent += "</ul>";
 
-        // Pop-up içeriğini göster
-        alert("Benzer Şarkılar:\n" + popupContent);
-    })
-    .catch(error => console.error('Error:', error));
+    // Pop-up içeriğini göster
+    document.getElementById("songList").innerHTML = popupContent;
+})
+.catch(error => console.error('Error:', error));
+
 }
 
         // Popup gösterme fonksiyonu
