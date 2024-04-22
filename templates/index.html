@@ -1,243 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ana Sayfa</title>
     <style>
-        body{
-            background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");      
-        }
-        /* Navbar stilleri */
-        .navbar {
-            background-color: #f2ece8; /* Pastel pembe */
-            overflow: hidden;
-            padding: 10px; /* Navbar içeriğinin kenar boşlukları */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Gölgelendirme */
-            position: fixed; /* Sabit navbar */
-            top: 0; /* En üstte */
-            width: 100%; /* Tam genişlik */
-        }
-        
-        /* Navbar içerisindeki linklerin stilleri */
-        .navbar a {
-            float: left; /* Linkleri yan yana yerleştir */
-            color: #444; /* Yazı rengi */
-            text-align: center; /* Metni ortala */
-            padding: 10px 20px; /* Yatay ve dikey boşluklar */
-            text-decoration: none; /* Altçizgiyi kaldır */
-            font-size: 16px; /* Yazı boyutu */
-            transition: color 0.3s; /* Renk geçişi */
-        }
-        
-        /* Linklerin hover durumundaki stilleri */
-        .navbar a:hover {
-            color: #007bff; /* Mavi */
-        }
+      body {
+        background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");
+      }
+      /* Navbar stilleri */
+      .navbar {
+        background-color: #f2ece8; /* Pastel pembe */
+        overflow: hidden;
+        padding: 10px; /* Navbar içeriğinin kenar boşlukları */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölgelendirme */
+        position: fixed; /* Sabit navbar */
+        top: 0; /* En üstte */
+        width: 100%; /* Tam genişlik */
+      }
 
-        /* Sağ taraftaki butonların stilleri */
-        .navbar .right {
-            float: right; /* Sağa yasla */
-        }
+      /* Navbar içerisindeki linklerin stilleri */
+      .navbar a {
+        float: left; /* Linkleri yan yana yerleştir */
+        color: #444; /* Yazı rengi */
+        text-align: center; /* Metni ortala */
+        padding: 10px 20px; /* Yatay ve dikey boşluklar */
+        text-decoration: none; /* Altçizgiyi kaldır */
+        font-size: 16px; /* Yazı boyutu */
+        transition: color 0.3s; /* Renk geçişi */
+      }
 
-        /* Arama kutusunun ve butonun stilleri */
-        .search-container {
+      /* Linklerin hover durumundaki stilleri */
+      .navbar a:hover {
+        color: #007bff; /* Mavi */
+      }
+
+      /* Sağ taraftaki butonların stilleri */
+      .navbar .right {
+        float: right; /* Sağa yasla */
+      }
+
+      /* Arama kutusunun ve butonun stilleri */
+      .search-container {
         text-align: center; /* Metni ortala */
         margin: 100px auto; /* Ekranın ortasına almak için margin kullan */
         background-color: #f2ece8; /* Krem rengi */
         padding: 20px; /* İçeriği kenarlardan ayırmak için padding kullan */
         border-radius: 10px; /* Köşeleri yuvarla */
-        width: 50%; /* Genişlik ayarla */
-        height: 200px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Hafif gölgelendirme */
-    }
+        max-height: 500px; /* Maksimum yükseklik */
+        max-width: 50%; /* Maksimum genişlik */
+        overflow-y: auto; /* Dikey taşma ve kaydırma */
+        transition: all 0.3s; /* Yumuşak geçiş */
+      }
 
-        .search-container select {
-            width: 300px; /* Arama kutusu genişliği */
-            margin-bottom: 5px;
-            padding: 10px; /* Yatay ve dikey boşluklar */
-            border-radius: 25px; /* Köşeleri yuvarla */
-            border: 2px solid #ccc; /* Kenar çizgisi */
-            box-sizing: border-box; /* Kutunun içeriğinizi çizgiye dahil et */
-            transition: border-color 0.3s; /* Kenar çizgisi rengi geçişi */
-            font-size: 14px; /* Yazı boyutu */
-            position: absolute; /* Mutlak pozisyon */
-            top: 50%; /* Üst kenarı dikey olarak ortala */
-            left: 50%; /* Sol kenarı yatay olarak ortala */
-            transform: translate(-50%, -50%); /* Dikey ve yatayda ortala */
-        }
+      .search-container select {
+        width: 300px; /* Arama kutusu genişliği */
+        margin-bottom: 10px;
+        padding: 10px; /* Yatay ve dikey boşluklar */
+        border-radius: 25px; /* Köşeleri yuvarla */
+        border: 2px solid #ccc; /* Kenar çizgisi */
+        box-sizing: border-box; /* Kutunun içeriği kenar çizgisine dahil et */
+      }
 
-        /* Arama butonunun stilleri */
-        .search-container button {
-            margin-left: 25px;
-            background-color: #f83232; /* Mavi */
-            color: white; /* Yazı rengi */
-            padding: 10px 20px; /* Yatay ve dikey boşluklar */
-            border: none; /* Kenar çizgisi yok */
-            border-radius: 25px; /* Köşeleri yuvarla */
-            cursor: pointer; /* Üzerine geldiğinde imleci el simgesine dönüştür */
-            transition: background-color 0.3s; /* Arka plan rengi geçişi */
-            font-size: 14px; /* Yazı boyutu */
-            position: absolute; /* Mutlak pozisyon */
-            top: 50%; /* Üst kenarı dikey olarak ortala */
-            left: calc(50% + 170px); /* Sol kenarı yatay olarak ortala */
-            transform: translate(-50%, -50%); /* Dikey ve yatayda ortala */
-        }
+      /* Arama butonunun stilleri */
+      .search-container button {
+        margin-left: 25px;
+        background-color: #f83232; /* Kırmızı */
+        color: white; /* Yazı rengi */
+        padding: 10px 20px; /* Yatay ve dikey boşluklar */
+        border: none; /* Kenar çizgisi yok */
+        border-radius: 25px; /* Köşeleri yuvarla */
+        cursor: pointer; /* Üzerine geldiğinde imleci el simgesine dönüştür */
+        transition: background-color 0.3s; /* Arka plan rengi geçişi */
+      }
 
-        .search-container button:hover {
-            background-color: #0056b3; /* Koyu mavi */
-        }
+      /* Arama butonu hover durumunda */
+      .search-container button:hover {
+        background-color: #0056b3; /* Koyu mavi */
+      }
 
-        /* Body stilleri */
-        body {
-            background-color: #fffaf0d7; /* Pastel sarı */
-            margin: 0; /* Kenar boşluğu yok */
-            font-family: Arial, sans-serif; /* Yazı tipi */
-            text-align: center; /* Metni ortala */
-            min-height: 100vh; /* Ekran yüksekliği */
-            display: flex; /* Dikey hizalama */
-            justify-content: center; /* Yatay hizalama */
-            align-items: center; /* Dikey hizalama */
-        }
+      /* Öneri listesinin stilleri */
+      .recommendation-list {
+        text-align: left; /* Metni sola hizala */
+        margin-top: 20px; /* Üst kenar boşluğu */
+        list-style-type: none; /* Madde işaretleri yok */
+        padding: 0; /* Sol kenar boşluğu yok */
+      }
 
-        /* Kullanıcı adı stilleri */
-        .username {
-            float: left; /* Sola yasla */
-            padding: 10px 20px; /* Yatay ve dikey boşluklar */
-        }
+      .recommendation-list li {
+        background-color: #fff; /* Beyaz arka plan */
+        margin: 5px 0; /* Üst ve alt boşluk */
+        padding: 10px; /* İçerik boşluğu */
+        border: 1px solid #ddd; /* Kenar çizgisi */
+        border-radius: 10px; /* Köşeleri yuvarla */
+        display: flex; /* Yatay yerleşim */
+        align-items: center; /* Dikey hizalama */
+        width: 100%; /* Kapsayıcı genişliği */
+      }
 
-        /* Popup stilleri */
-        .popup {
-            position: fixed; /* Sabit konum */
-            top: 50%; /* Dikeyde ortala */
-            left: 50%; /* Yatayda ortala */
-            transform: translate(-50%, -50%); /* Ortala */
-            background-color: rgba(0, 0, 0, 0.8); /* Arka plan rengi ve opaklık */
-            color: white; /* Yazı rengi */
-            padding: 20px; /* Kenar boşluğu */
-            border-radius: 10px; /* Köşe yuvarlama */
-            z-index: 999; /* Popup'ı en üstte tut */
-            display: none; /* Başlangıçta görünmez */
-            text-align: left; /* Metni sola yasla */
-            max-width: 80%; /* Maksimum genişlik */
-        }
+      .recommendation-list li .play-button,
+      .recommendation-list li .add-button {
+        background-color: #f83232; /* Kırmızı */
+        color: white; /* Yazı rengi */
+        padding: 10px 20px; /* Yatay ve dikey boşluklar */
+        border: none; /* Kenar çizgisi yok */
+        border-radius: 25px; /* Köşeleri yuvarla */
+        cursor: pointer; /* İmleç el şeklinde */
+      }
 
-        .popup .content {
-            font-size: 18px; /* Metin boyutu */
-        }
-
-        .popup button {
-            background-color: #f83232; /* Kırmızı */
-            color: white; /* Yazı rengi */
-            padding: 10px 20px; /* Yatay ve dikey boşluklar */
-            border: none; /* Kenar çizgisi yok */
-            border-radius: 25px; /* Köşeleri yuvarla */
-            cursor: pointer; /* Üzerine geldiğinde imleci el simgesine dönüştür */
-            transition: background-color 0.3s; /* Arka plan rengi geçişi */
-            font-size: 14px; /* Yazı boyutu */
-        }
-
-        .popup button:hover {
-            background-color: #0056b3; /* Koyu mavi */
-        }
-
-        .popup .close {
-            position: absolute; /* Mutlak konum */
-            top: 10px; /* Yukarıdan kenar boşluğu */
-            right: 10px; /* Sağdan kenar boşluğu */
-            color: white; /* Yazı rengi */
-            cursor: pointer; /* İmleci el simgesine dönüştür */
-        }
-
-        .popup .add-to-list {
-            margin-top: 20px; /* Listenin üst kenar boşluğu */
-        }
+      .recommendation-list li .add-button:hover,
+      .play-button:hover {
+        background-color: #0056b3; /* Koyu mavi */
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="navbar">
-        <div class="left">
-            <a href="/">Ana Sayfa</a>
-            <a href="/about">Hakkımızda</a>
-        </div>
-        <div class="right">
-            {% if 'username' in session %}
-                <span class="username">Hoşgeldin {{ session['username'] }}</span>
-                <a href="/logout">Çıkış Yap</a>
-            {% else %}
-                <a href="/login">Giriş Yap</a>
-                <a href="/register">Üye Ol</a>
-            {% endif %}
-        </div>
-    </div>
-    
-    <div class="search-container">
-        <select id="searchSelect" onchange="search()">
-            <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
-        </select>
-        <button type="button" onclick="showPopup()">Öner</button>
+      <div class="left">
+        <a href="/">Ana Sayfa</a>
+        <a href="/about">Hakkımızda</a>
+      </div>
+      <div class="right">
+        {% if 'username' in session %}
+        <a href="/playlist">Çalma Listem</a>
+        <!-- Kullanıcı giriş yaptıysa göster -->
+        <span class="username">Hoş geldin {{ session['username'] }}</span>
+        <a href="/logout">Çıkış Yap</a>
+        {% else %}
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Üye Ol</a>
+        {% endif %}
+      </div>
     </div>
 
-    <div id="popup" class="popup">
-        <span class="close" onclick="hidePopup()">&times;</span>
-        <div class="content" id="songList">
-            <ul id="songUl"></ul> <!-- Liste -->
-            <button class="add-to-list" onclick="addToList()">Listeye Ekle</button> <!-- Buton -->
-        </div>
+    <div class="search-container">
+      <select id="searchSelect">
+        <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
+      </select>
+      <button type="button" onclick="showSimilarSongs()">Öner</button>
+      <ul class="recommendation-list" id="recommendationsList"></ul>
     </div>
 
     <script>
-        fetch('/get_songs')
-            .then(response => response.json())
-            .then(songs => {
-                const select = document.getElementById("searchSelect");
-                songs.forEach(song => {
-                    const option = document.createElement("option");
-                    option.text = `${song.title} - ${song.artist}`;
-                    option.value = song.file; 
-                    select.add(option);
-                });
+      fetch("/get_songs")
+        .then((response) => response.json())
+        .then((songs) => {
+          const select = document.getElementById("searchSelect");
+          songs.forEach((song) => {
+            const option = document.createElement("option");
+            option.text = `${song.title} - ${song.artist}`;
+            option.value = song.file;
+            select.add(option);
+          });
+        })
+        .catch((error) => console.error("Error:", error));
+
+      function showSimilarSongs() {
+        const select = document.getElementById("searchSelect");
+        const selectedFileName = select.options[select.selectedIndex].value;
+
+        fetch("/get_similar_songs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ file: selectedFileName }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            const recommendationList = document.getElementById(
+              "recommendationsList"
+            );
+            recommendationList.innerHTML = ""; // Listeyi temizle
+
+            data.forEach((song) => {
+              const listItem = document.createElement("li");
+              listItem.innerHTML = `<strong>Şarkı Adı:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}`;
+              const addButton = document.createElement("button");
+              const playButton = document.createElement("button");
+              addButton.textContent = "Listeye Ekle";
+              addButton.className = "add-button";
+              playButton.textContent = "Şarkıyı Çal";
+              playButton.className = "play-button";
+              addButton.addEventListener("click", () => addToList(song));
+              playButton.addEventListener("click", () => playSong());
+              listItem.appendChild(playButton);
+              listItem.appendChild(addButton);
+              recommendationList.appendChild(listItem);
+            });
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+      function checkLogin() {
+        return fetch("/is_logged_in") // Kullanıcının giriş yapıp yapmadığını kontrol eden bir backend endpoint'i
+          .then((response) => response.json())
+          .then((data) => data.is_logged_in);
+      }
+
+      function addToList(song) {
+        // Check if user is logged in
+        checkLogin().then((isLoggedIn) => {
+          if (!isLoggedIn) {
+            alert(
+              "Giriş yapmadan bu listeye ekleyemezsiniz. Lütfen giriş yapın."
+            );
+            window.location.href = "/login";
+            return;
+          }
+
+          // Post request to add the song to the playlist
+          fetch("/add_to_playlist", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: song.title,
+              artist: song.artist,
+              file: song.file,
+            }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log(
+                  `Şarkı listeye eklendi: ${song.title} - ${song.artist}`
+                );
+              } else {
+                console.error("Şarkı eklenirken hata oluştu:", response.status);
+              }
             })
-            .catch(error => console.error('Error:', error));
+            .catch((error) => console.error("Error:", error));
+        });
+      }
 
-        function search() {
-            var select = document.getElementById("searchSelect");
-            var selectedFileName = select.options[select.selectedIndex].value;
-
-            fetch('/get_similar_songs', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ file: selectedFileName })
-            })
-            .then(response => response.json())
-            .then(data => {
-                var popupContent = "<ul>";
-                data.forEach(song => {
-                    popupContent += `<li><strong>Şarkı Adı:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}, <strong>Benzerlik Skoru:</strong> ${song.similarity_score}</li>`;
-                });
-                popupContent += "</ul>";
-                document.getElementById("songList").innerHTML = popupContent;
-            })
-            .catch(error => console.error('Error:', error));
+      let currentAudio = null; // Çalan şarkıyı tutmak için bir değişken
+      function playSong(songFile) {
+        // Mevcut bir şarkı çalıyorsa, önce onu durdur
+        if (currentAudio) {
+          currentAudio.pause(); // Mevcut sesi durdur
+          currentAudio.currentTime = 0; // Başlangıca dön
         }
 
-        function showPopup() {
-            document.getElementById("popup").style.display = "block";
-        }
+        // Yeni ses nesnesi oluştur
+        const audio = new Audio(songFile);
 
-        function hidePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
+        // Global değişkeni yeni ses nesnesine ayarla
+        currentAudio = audio;
 
-        function addToList() {
-            var select = document.getElementById("searchSelect");
-            var selectedFileName = select.options[select.selectedIndex].text; // Seçilen şarkının metnini al
-            var listItem = document.createElement("li"); // Yeni liste öğesi oluştur
-            listItem.textContent = selectedFileName; // İçeriği seçilen şarkının metniyle doldur
-            document.getElementById("songUl").appendChild(listItem); // Listeye ekle
-        }
+        // Çalmaya başla
+        audio
+          .play()
+          .then(() => {
+            console.log("Şarkı çalmaya başladı:", songFile);
+          })
+          .catch((error) => {
+            console.error("Şarkı çalınırken bir hata oluştu:", error);
+          });
+      }
     </script>
-</body>
+  </body>
 </html>

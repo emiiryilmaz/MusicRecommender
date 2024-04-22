@@ -1,78 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");  
-        }
-        form {
-            margin: 100px auto;
-            background-color: #f2ece8;
-            width: auto; /* Genişliği otomatik olarak ayarla */
-            max-width: 300px; /* Maksimum genişlik */
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        input[type="text"],
-        input[type="name"],
-        input[type="email"],
-        input[type="password"] {
-            width: calc(100% - 22px); /* Sol ve sağ kenar boşluklarını ve çerçeve genişliğini ayarla */
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #4CAF50;
-        }
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-            background-color: #f83131;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        input[type="submit"]:hover {
-            background-color: #390a0a;
-        }
+      /* Navbar stilleri */
+      .navbar {
+        background-color: #f2ece8; /* Pastel pembe */
+        overflow: hidden;
+        padding: 10px; /* Navbar içeriğinin kenar boşlukları */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölgelendirme */
+        position: fixed; /* Sabit navbar */
+        top: 0; /* En üstte */
+        width: 100%; /* Tam genişlik */
+      }
+
+      /* Navbar içerisindeki linklerin stilleri */
+      .navbar a {
+        float: left; /* Linkleri yan yana yerleştir */
+        color: #444; /* Yazı rengi */
+        text-align: center; /* Metni ortala */
+        padding: 10px 20px; /* Yatay ve dikey boşluklar */
+        text-decoration: none; /* Altçizgiyi kaldır */
+        font-size: 16px; /* Yazı boyutu */
+        transition: color 0.3s; /* Renk geçişi */
+      }
+
+      /* Linklerin hover durumundaki stilleri */
+      .navbar a:hover {
+        color: #007bff; /* Mavi */
+      }
+
+      /* Sağ taraftaki butonların stilleri */
+      .navbar .right {
+        float: right; /* Sağa yasla */
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");
+      }
+      form {
+        margin: 100px auto;
+        background-color: #f2ece8;
+        width: auto; /* Genişliği otomatik olarak ayarla */
+        max-width: 300px; /* Maksimum genişlik */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+      input[type="text"],
+      input[type="name"],
+      input[type="email"],
+      input[type="password"] {
+        width: calc(
+          100% - 22px
+        ); /* Sol ve sağ kenar boşluklarını ve çerçeve genişliğini ayarla */
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        transition: border-color 0.3s;
+      }
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus {
+        outline: none;
+        border-color: #4caf50;
+      }
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        box-sizing: border-box;
+        background-color: #f83131;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      input[type="submit"]:hover {
+        background-color: #390a0a;
+      }
     </style>
-    
-    
-    
-</head>
-<body>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="left">
+        <a href="/">Ana Sayfa</a>
+        <a href="/about">Hakkımızda</a>
+      </div>
+      <div class="right">
+        {% if 'username' in session %}
+        <a href="/playlist">Çalma Listem</a>
+        <!-- Kullanıcı giriş yaptıysa göster -->
+        <span class="username">Hoş geldin {{ session['username'] }}</span>
+        <a href="/logout">Çıkış Yap</a>
+        {% else %}
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Üye Ol</a>
+        {% endif %}
+      </div>
+    </div>
     <form action="/register" method="post">
-        <h2>Üye Ol</h2>
-        <input type="name" name="name" placeholder="İsim" required>
-        <input type="email" name="email" placeholder="E-mail" required>
-        <input type="text" name="username" placeholder="Kullanıcı Adı" required>
-        <input type="password" name="password" placeholder="Şifre" required>
-        <input type="submit" value="Kayıt Ol">
+      <h2>Üye Ol</h2>
+      <input type="name" name="name" placeholder="İsim" required />
+      <input type="email" name="email" placeholder="E-mail" required />
+      <input type="text" name="username" placeholder="Kullanıcı Adı" required />
+      <input type="password" name="password" placeholder="Şifre" required />
+      <input type="submit" value="Kayıt Ol" />
     </form>
-</body>
+  </body>
 </html>
