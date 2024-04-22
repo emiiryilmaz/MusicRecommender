@@ -4,9 +4,9 @@ from pymongo import MongoClient
 import numpy as np
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Güçlü bir gizli anahtarla değiştirin
+app.secret_key = "your_secret_key"  
 client = MongoClient('localhost', 27017)
-db = client['MusicRecommender']  # MongoDB veritabanı adınızı değiştirin
+db = client['MusicRecommender']  
 users_collection = db['users']
 songs_collection = db['songs']
 
@@ -46,6 +46,16 @@ def index():
         return render_template('index.html', username=session['username'])
     else:
         return render_template('index.html')
+    
+@app.route('/add_to_playlist', methods=['POST'])
+def add_to_playlist():
+    # Çalma listesine ekleme işlemleri buraya gelecek
+    pass
+
+@app.route('/play_song', methods=['POST'])
+def play_song():
+    # Şarkıyı çalma işlemleri buraya gelecek
+    pass
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

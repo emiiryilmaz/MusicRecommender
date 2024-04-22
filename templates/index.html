@@ -118,10 +118,30 @@
             border-radius: 10px; /* Köşe yuvarlama */
             z-index: 999; /* Popup'ı en üstte tut */
             display: none; /* Başlangıçta görünmez */
+            text-align: left; /* Metni sola yasla */
+            max-width: 80%; /* Maksimum genişlik */
         }
 
-        /* Kapatma butonu stilleri */
-        .close {
+        .popup .content {
+            font-size: 18px; /* Metin boyutu */
+        }
+
+        .popup button {
+            background-color: #f83232; /* Kırmızı */
+            color: white; /* Yazı rengi */
+            padding: 10px 20px; /* Yatay ve dikey boşluklar */
+            border: none; /* Kenar çizgisi yok */
+            border-radius: 25px; /* Köşeleri yuvarla */
+            cursor: pointer; /* Üzerine geldiğinde imleci el simgesine dönüştür */
+            transition: background-color 0.3s; /* Arka plan rengi geçişi */
+            font-size: 14px; /* Yazı boyutu */
+        }
+
+        .popup button:hover {
+            background-color: #0056b3; /* Koyu mavi */
+        }
+
+        .popup .close {
             position: absolute; /* Mutlak konum */
             top: 10px; /* Yukarıdan kenar boşluğu */
             right: 10px; /* Sağdan kenar boşluğu */
@@ -129,9 +149,8 @@
             cursor: pointer; /* İmleci el simgesine dönüştür */
         }
 
-        /* İçerik alanı stilleri */
-        .content {
-            padding: 20px 0; /* Dikey ve yatay kenar boşluğu */
+        .popup .add-to-list {
+            margin-top: 20px; /* Listenin üst kenar boşluğu */
         }
     </style>
 </head>
@@ -155,7 +174,6 @@
     <div class="search-container">
         <select id="searchSelect" onchange="search()">
             <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
-            <button type="button" onclick="showPopup()">Öner</button>
         </select>
         <button type="button" onclick="showPopup()">Öner</button>
     </div>
@@ -163,12 +181,12 @@
     <div id="popup" class="popup">
         <span class="close" onclick="hidePopup()">&times;</span>
         <div class="content" id="songList">
-            <!-- Arama sonuçlarının buraya ekleneceği alan -->
+            <ul id="songUl"></ul> <!-- Liste -->
+            <button class="add-to-list" onclick="addToList()">Listeye Ekle</button> <!-- Buton -->
         </div>
     </div>
 
     <script>
-        // Combobox içeriğini dinamik olarak doldur
         fetch('/get_songs')
             .then(response => response.json())
             .then(songs => {
@@ -176,48 +194,49 @@
                 songs.forEach(song => {
                     const option = document.createElement("option");
                     option.text = `${song.title} - ${song.artist}`;
-                    option.value = song.file; // Dosya adı olarak 'file' değerini kullan
+                    option.value = song.file; 
                     select.add(option);
                 });
             })
             .catch(error => console.error('Error:', error));
 
-        // Arama fonksiyonu
-function search() {
-    var select = document.getElementById("searchSelect");
-    var selectedFileName = select.options[select.selectedIndex].value;
+        function search() {
+            var select = document.getElementById("searchSelect");
+            var selectedFileName = select.options[select.selectedIndex].value;
 
-    fetch('/get_similar_songs', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ file: selectedFileName })
-})
-.then(response => response.json())
-.then(data => {
-    // Pop-up içeriğini oluştur
-    var popupContent = "<ul>";
-    data.forEach(song => {
-        popupContent += `<li><strong>Title:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}, <strong>Benzerlik Skoru:</strong> ${song.similarity_score}</li>`;
-    });
-    popupContent += "</ul>";
+            fetch('/get_similar_songs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ file: selectedFileName })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var popupContent = "<ul>";
+                data.forEach(song => {
+                    popupContent += `<li><strong>Şarkı Adı:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}, <strong>Benzerlik Skoru:</strong> ${song.similarity_score}</li>`;
+                });
+                popupContent += "</ul>";
+                document.getElementById("songList").innerHTML = popupContent;
+            })
+            .catch(error => console.error('Error:', error));
+        }
 
-    // Pop-up içeriğini göster
-    document.getElementById("songList").innerHTML = popupContent;
-})
-.catch(error => console.error('Error:', error));
-
-}
-
-        // Popup gösterme fonksiyonu
         function showPopup() {
             document.getElementById("popup").style.display = "block";
         }
 
-        // Popup gizleme fonksiyonu
         function hidePopup() {
             document.getElementById("popup").style.display = "none";
+        }
+
+        function addToList() {
+            var select = document.getElementById("searchSelect");
+            var selectedFileName = select.options[select.selectedIndex].text; // Seçilen şarkının metnini al
+            var listItem = document.createElement("li"); // Yeni liste öğesi oluştur
+            listItem.textContent = selectedFileName; // İçeriği seçilen şarkının metniyle doldur
+            document.getElementById("songUl").appendChild(listItem); // Listeye ekle
         }
     </script>
 </body>
