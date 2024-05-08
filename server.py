@@ -9,36 +9,32 @@ app.secret_key = "your_secret_key"
 client = MongoClient('localhost', 27017)
 db = client['MusicRecommender']  
 users_collection = db['users']
-songs_collection = db['songs']
-
-json_file = "song_info.json"  
-with open(json_file, 'r') as file:
-    json_data = json.load(file)
-
-@app.route('/get_similar_songs', methods=['POST'])
-def get_similar_songs():
-    selected_file = request.json.get('file')
-    data_dict = np.load('most_similar_arrays.npy', allow_pickle=True).item()
-    similar_song_info = []
-
-    for similar_song in data_dict[selected_file]:
-        similar_filename = similar_song[0]
-        similar_title = None
-        similar_artist = None
-
-        for item in json_data:
-            if item["file"] == similar_filename:
-                similar_title = item["title"]
-                similar_artist = item["artist"]
-                break
-        if similar_title is not None and similar_artist is not None:
-            similar_song_info.append({"title": similar_title, "artist": similar_artist,"file":similar_filename})
-    return jsonify(similar_song_info)
+songs_collection = db['songdata']
 
 @app.route('/get_songs', methods=['GET'])
 def get_songs():
     songs = list(songs_collection.find({}, {'_id': 0, 'title': 1, 'artist': 1, 'file': 1}))
     return jsonify(songs)
+
+@app.route('/get_similar_songs', methods=['POST'])
+def get_similar_songs():
+    selected_file = request.json.get('file')
+    data_dict = np.load('most_similar_arrays.npy', allow_pickle=True).item()  # Şarkı benzerlik verisi
+    print(selected_file)
+    similar_song_info = []
+
+    if selected_file not in data_dict:
+        return jsonify({"error": "File not found in similarity data"}), 404
+    for similar_song in data_dict[selected_file]:
+        similar_filename = similar_song[0]
+        song = songs_collection.find_one({"file": similar_filename}, {'_id': 0, 'title': 1, 'artist': 1, 'file': 1})
+        if song:
+            similar_song_info.append({
+                "title": song["title"],
+                "artist": song["artist"],
+                "file": song["file"]
+            })
+    return jsonify(similar_song_info)
 
 @app.route('/add_to_playlist', methods=['POST'])
 def add_to_playlist():
@@ -46,12 +42,10 @@ def add_to_playlist():
         return jsonify({"error": "User not logged in"}), 401  # 401 Unauthorized
     
     username = session['username']
-    song_data = request.json  # Frontend'den gelen JSON verilerini al
-    print("Received POST data:", song_data)  # Verileri konsola yazdır
+    song_data = request.json 
     song_title = song_data["title"]
     song_artist = song_data["artist"]
     song_file = song_data["file"]
-    print(song_file)
     if not song_title or not song_artist or not song_file:
         return jsonify({"error": "Incomplete song data"}), 400  # 400 Bad Request
     
@@ -99,16 +93,14 @@ def remove_from_playlist():
 
     return jsonify({"message": "Song removed from playlist successfully"}), 200  # 200 OK
 
-@app.route('/play_song', methods=['POST'])
-def play_song():
-    song_data = request.json  
-    song_file = song_data.get("file")
-    if not song_file:
-        return jsonify({"error": "Song file not specified"}), 400  # 400 Bad Request
-    song = songs_collection.find_one({"file": song_file})
+@app.route('/get_base64_song', methods=['POST'])
+def get_base64_song():
+    data = request.json  # POST isteğinden veriyi alın
+    filename = data.get('file')  # İstenen dosyanın adını alın
+    song = songs_collection.find_one({'file': filename}, {'_id': 0, 'mp3_base64': 1, 'title': 1, 'artist': 1})
     if not song:
-        return jsonify({"error": "Song not found"}), 404  # 404 Not Found
-    return jsonify({"file_path": song_file}), 200  # 200 OK
+        return jsonify({"error": "Şarkı bulunamadı"}), 404  # Şarkı bulunamazsa hata döndür
+    return jsonify(song)
 
 @app.route('/')
 def index():
@@ -182,6 +174,7 @@ def playlist():
     playlist = user.get("playlist", [])  # Çalma listesi olup olmadığını kontrol et
 
     return render_template('playlist.html', playlist=playlist, username=username)   
+
 @app.route('/about', methods=['GET', 'POST'])
 def about():
  return render_template('about.html')

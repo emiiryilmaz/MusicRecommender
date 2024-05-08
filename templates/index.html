@@ -1,366 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <!-- Font Awesome'ı yüklemek için -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ana Sayfa</title>
     <style>
-        body {
-            background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");
-            margin: 0;
-        }
+      body {
+        background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");
+        margin: 0;
+      }
 
-        /* Navbar stilleri */
-        .navbar {
-            background-color: #f2ece8;
-            /* Pastel pembe */
-            overflow: hidden;
-            padding: 10px;
-            /* Navbar içeriğinin kenar boşlukları */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            /* Gölgelendirme */
-            position: fixed;
-            /* Sabit navbar */
-            top: 0;
-            /* En üstte */
-            width: 100%;
-            /* Tam genişlik */
-        }
+      /* Navbar stilleri */
+      .navbar {
+        background-color: #f2ece8;
+        overflow: hidden;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
 
-        /* Navbar içerisindeki linklerin stilleri */
-        .navbar a {
-            float: left;
-            /* Linkleri yan yana yerleştir */
-            color: #444;
-            /* Yazı rengi */
-            text-align: center;
-            /* Metni ortala */
-            padding: 10px 20px;
-            /* Yatay ve dikey boşluklar */
-            text-decoration: none;
-            /* Altçizgiyi kaldır */
-            font-size: 16px;
-            /* Yazı boyutu */
-            transition: color 0.3s;
-            /* Renk geçişi */
-        }
+      /* Navbar içerisindeki linklerin stilleri */
+      .navbar a {
+        float: left;
+        color: #444;
+        text-align: center;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s;
+      }
 
-        /* Linklerin hover durumundaki stilleri */
-        .navbar a:hover {
-            color: #007bff;
-            /* Mavi */
-        }
+      /* Linklerin hover durumundaki stilleri */
+      .navbar a:hover {
+        color: #007bff;
+      }
 
-        /* Sağ taraftaki butonların stilleri */
-        .navbar .right {
-            float: right;
-            /* Sağa yasla */
-            margin-right: 20px;
-            /* Sağ taraftaki boşluğu artır */
-        }
+      /* Sağ taraftaki butonların stilleri */
+      .navbar .right {
+        float: right;
+        margin-right: 20px;
+      }
 
-        .navbar .right span {
-            padding: 10px 20px;
-            float: right;
-            /* Sağa yasla */
-            margin-right: 20px;
-            /* Sağ taraftaki boşluğu artır */
-            color: #444;
-            /* Yazı rengi */
-            text-align: center;
-            /* Metni ortala */
-            font-size: 16px;
-            /* Yazı boyutu */
-        }
+      .navbar .right span {
+        padding: 10px 20px;
+        float: right;
+        margin-right: 20px;
+        color: #444;
+        text-align: center;
+        font-size: 16px;
+      }
 
+      /* Arama kutusunun ve butonun stilleri */
+      .search-container {
+        text-align: center;
+        margin: 100px auto;
+        background-color: #f2ece8;
+        padding-top: 20px;
+        padding-right: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-height: 100%;
+        max-width: 55%;
+        overflow-y: auto;
+        transition: all 0.3s;
+        height: 60%;
+      }
 
-        /* Arama kutusunun ve butonun stilleri */
-        .search-container {
-            text-align: center;
-            /* Metni ortala */
-            margin: 100px auto;
-            /* Ekranın ortasına almak için margin kullan */
-            background-color: #f2ece8;
-            /* Krem rengi */
-            padding-top: 20px;
-            padding-right: 20px;
-            /* İçeriği kenarlardan ayırmak için padding kullan */
-            border-radius: 10px;
-            /* Köşeleri yuvarla */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            /* Hafif gölgelendirme */
-            max-height: 100%;
-            /* Maksimum yükseklik */
-            max-width: 55%;
-            /* Maksimum genişlik */
-            overflow-y: auto;
-            /* Dikey taşma ve kaydırma */
-            transition: all 0.3s;
-            /* Yumuşak geçiş */
-            height: 60%; /* Genişlik */
-        }
+      .search-container select {
+        width: 500px;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 25px;
+        border: 2px solid #ccc;
+        box-sizing: border-box;
+      }
 
-        .search-container select {
-            width: 500px;
-            /* Arama kutusu genişliği */
-            margin-bottom: 10px;
-            padding: 10px;
-            /* Yatay ve dikey boşluklar */
-            border-radius: 25px;
-            /* Köşeleri yuvarla */
-            border: 2px solid #ccc;
-            /* Kenar çizgisi */
-            box-sizing: border-box;
-            /* Kutunun içeriği kenar çizgisine dahil et */
-        }
+      /* Arama butonunun stilleri */
+      .search-container button {
+        margin-left: 25px;
+        background-color: #f83232;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
 
-        /* Arama butonunun stilleri */
-        .search-container button {
-            margin-left: 25px;
-            background-color: #f83232;
-            /* Kırmızı */
-            color: white;
-            /* Yazı rengi */
-            padding: 10px 20px;
-            /* Yatay ve dikey boşluklar */
-            border: none;
-            /* Kenar çizgisi yok */
-            border-radius: 25px;
-            /* Köşeleri yuvarla */
-            cursor: pointer;
-            /* Üzerine geldiğinde imleci el simgesine dönüştür */
-            transition: background-color 0.3s;
-            /* Arka plan rengi geçişi */
-        }
+      .search-container button:hover {
+        background-color: #0056b3;
+      }
 
-        /* Arama butonu hover durumunda */
-        .search-container button:hover {
-            background-color: #0056b3;
-            /* Koyu mavi */
-        }
+      /* Öneri listesinin stilleri */
+      .recommendation-list {
+        text-align: left; /* Metni sola hizala */
+        margin-top: 20px;
+        list-style-type: none;
+        padding: 20px 20px;
+      }
 
-        /* Öneri listesinin stilleri */
-        .recommendation-list {
-            text-align: left;
-            /* Metni sola hizala */
-            margin-top: 20px;
-            /* Üst kenar boşluğu */
-            list-style-type: none;
-            /* Madde işaretleri yok */
-            padding: 20px 20px;
-            /* Sol kenar boşluğu yok */
-        }
+      .recommendation-list li {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        margin: 5px 0;
+      }
 
-        .recommendation-list li {
-            background-color: #fff;
-            /* Beyaz arka plan */
-            margin: 5px 0;
-            /* Üst ve alt boşluk */
-            padding: 10px;
-            /* İçerik boşluğu */
-            border: 1px solid #ddd;
-            /* Kenar çizgisi */
-            border-radius: 10px;
-            /* Köşeleri yuvarla */
-            display: flex;
-            /* Yatay yerleşim */
-            align-items: center;
-            justify-items:stretch;
-            /* Dikey hizalama */
-            width: 100%;
-            /* Kapsayıcı genişliği */
-        }
+      .audio-progress {
+        width: 100%;
+        height: 5px;
+        background: lightgray;
+        position: relative;
+        cursor: pointer;
+      }
 
-        .recommendation-list li .play-button{
-            background-color: #f83232;
-            /* Kırmızı */
-            color: white;
-            /* Yazı rengi */
-            padding: 10px 20px;
-            /* Yatay ve dikey boşluklar */
-            border: none;
-            /* Kenar çizgisi yok */
-            border-radius: 25px;
-            /* Köşeleri yuvarla */
-            cursor: pointer;
-            /* İmleç el şeklinde */
-
-        }
-        .recommendation-list li .add-button {
-            background-color: #f83232;
-            /* Kırmızı */
-            color: white;
-            /* Yazı rengi */
-            padding: 10px 20px;
-            /* Yatay ve dikey boşluklar */
-            border: none;
-            /* Kenar çizgisi yok */
-            border-radius: 25px;
-            /* Köşeleri yuvarla */
-            cursor: pointer;
-            /* İmleç el şeklinde */
-            margin-right: 0;
-            
-        }
-
-        .recommendation-list li .add-button:hover,
-        .play-button:hover {
-            background-color: #0056b3;
-            /* Koyu mavi */
-        }
+      .audio-progress span {
+        position: absolute;
+        height: 100%;
+        width: 0;
+        background: red;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="navbar">
-        <div class="left">
-            <a href="/">Ana Sayfa</a>
-            <a href="/about">Hakkımızda</a>
-        </div>
-        <div class="right">
-            {% if 'username' in session %}
-            <a href="/playlist">Çalma Listem</a>
-            <!-- Kullanıcı giriş yaptıysa göster -->
-            <span class="username">Hoş geldin {{ session['username'] }}</span>
-            <a href="/logout">Çıkış Yap</a>
-            {% else %}
-            <a href="/login">Giriş Yap</a>
-            <a href="/register">Üye Ol</a>
-            {% endif %}
-        </div>
+      <div class="left">
+        <a href="/">Ana Sayfa</a>
+        <a href="/about">Hakkımızda</a>
+      </div>
+      <div class="right">
+        {% if 'username' in session %}
+        <a href="/playlist">Çalma Listem</a>
+        <span class="username">Hoş geldin {{ session['username'] }}</span>
+        <a href="/logout">Çıkış Yap</a>
+        {% else %}
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Üye Ol</a>
+        {% endif %}
+      </div>
     </div>
 
     <div>
-        
-        <div class="search-container">
-            <p style="font-size: larger;">Sana şarkılar önermemiz için lütfen aşağıdan bir parça seç!</p>
-            <select id="searchSelect">
-                <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
-            </select>
-            <button type="button" onclick="showSimilarSongs()">Öner</button>
-            <ul class="recommendation-list" id="recommendationsList"></ul>
-        </div>
+      <div class="search-container">
+        <p style="font-size: larger">
+          Şarkı önerileri için aşağıdan bir şarkı seçin!
+        </p>
+        <select id="searchSelect">
+          <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
+        </select>
+        <button type="button" onclick="showSimilarSongs()">Öner</button>
+        <button
+          type="button"
+          id="playSelectedSongButton"
+          onclick="togglePlay( this )"
+        >
+          <i class="fas fa-play"></i>
+        </button>
+        <ul class="recommendation-list" id="recommendationsList"></ul>
+      </div>
     </div>
-    
 
     <script>
-        fetch("/get_songs")
-            .then((response) => response.json())
-            .then((songs) => {
-                const select = document.getElementById("searchSelect");
-                songs.forEach((song) => {
-                    const option = document.createElement("option");
-                    option.text = `${song.title} - ${song.artist}`;
-                    option.value = song.file;
-                    select.add(option);
-                });
-            })
-            .catch((error) => console.error("Error:", error));
+      fetch("/get_songs")
+        .then((response) => response.json())
+        .then((songs) => {
+          const select = document.getElementById("searchSelect");
+          songs.forEach((song) => {
+            const option = document.createElement("option");
+            option.text = `${song.title} - ${song.artist}`;
+            option.value = song.file;
+            select.add(option);
+          });
+        })
+        .catch((error) => console.error("Error:", error));
+      function showSimilarSongs() {
+        const select = document.getElementById("searchSelect");
+        const selectedFileName = select.options[select.selectedIndex].value;
 
-        function showSimilarSongs() {
-            const select = document.getElementById("searchSelect");
-            const selectedFileName = select.options[select.selectedIndex].value;
+        fetch("/get_similar_songs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ file: selectedFileName }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Şarkı önerileri alınamadı.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const recommendationList = document.getElementById(
+              "recommendationsList"
+            );
+            recommendationList.innerHTML = "";
 
-            fetch("/get_similar_songs", {
+            data.forEach((song) => {
+              const listItem = document.createElement("li");
+              listItem.innerHTML = `<b>${song.title}</b> -${song.artist}`;
+
+              const container = document.createElement("div");
+              container.style.display = "flex";
+
+              const audioPlayer = document.createElement("audio");
+              audioPlayer.controls = true;
+
+              fetch("/get_base64_song", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                  "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ file: selectedFileName }),
-            })
+                body: JSON.stringify({ file: song.file }),
+              })
                 .then((response) => response.json())
-                .then((data) => {
-                    const recommendationList = document.getElementById(
-                        "recommendationsList"
-                    );
-                    recommendationList.innerHTML = ""; // Listeyi temizle
-
-                    data.forEach((song) => {
-                        const listItem = document.createElement("li");
-                        listItem.innerHTML = `<strong>Şarkı Adı:</strong> ${song.title}, <strong>Artist:</strong> ${song.artist}`;
-                        const addButton = document.createElement("button");
-                        const playButton = document.createElement("button");
-                        addButton.textContent = "Listeye Ekle";
-                        addButton.className = "add-button";
-                        playButton.textContent = "Şarkıyı Çal";
-                        playButton.className = "play-button";
-                        addButton.addEventListener("click", () => addToList(song));
-                        playButton.addEventListener("click", () => playSong());
-                        listItem.appendChild(playButton);
-                        listItem.appendChild(addButton);
-                        recommendationList.appendChild(listItem);
-                    });
+                .then((songData) => {
+                  const base64_mp3 = songData.mp3_base64;
+                  audioPlayer.src = `data:audio/mp3;base64,${base64_mp3}`;
                 })
                 .catch((error) => console.error("Error:", error));
-        }
-        function checkLogin() {
-            return fetch("/is_logged_in") // Kullanıcının giriş yapıp yapmadığını kontrol eden bir backend endpoint'i
-                .then((response) => response.json())
-                .then((data) => data.is_logged_in);
-        }
 
-        function addToList(song) {
-            // Check if user is logged in
-            checkLogin().then((isLoggedIn) => {
-                if (!isLoggedIn) {
-                    alert(
-                        "Giriş yapmadan bu listeye ekleyemezsiniz. Lütfen giriş yapın."
-                    );
-                    window.location.href = "/login";
-                    return;
-                }
-
-                // Post request to add the song to the playlist
-                fetch("/add_to_playlist", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        title: song.title,
-                        artist: song.artist,
-                        file: song.file,
-                    }),
-                })
-                    .then((response) => {
-                        if (response.ok) {
-                            console.log(
-                                `Şarkı listeye eklendi: ${song.title} - ${song.artist}`
-                            );
-                        } else {
-                            console.error("Şarkı eklenirken hata oluştu:", response.status);
-                        }
-                    })
-                    .catch((error) => console.error("Error:", error));
+              const addIcon = document.createElement("i");
+              addIcon.className = "fas fa-plus";
+              addIcon.addEventListener("click", () => addToList(song));
+              container.appendChild(audioPlayer);
+              container.appendChild(addIcon);
+              listItem.appendChild(container);
+              recommendationList.appendChild(listItem);
             });
+          });
+      }
+
+      function checkLogin() {
+        return fetch("/is_logged_in")
+          .then((response) => response.json())
+          .then((data) => data.is_logged_in);
+      }
+
+      function addToList(song) {
+        checkLogin().then((isLoggedIn) => {
+          if (!isLoggedIn) {
+            alert(
+              "Giriş yapmadan bu listeye ekleyemezsiniz. Lütfen giriş yapın."
+            );
+            window.location.href = "/login";
+            return;
+          }
+
+          fetch("/add_to_playlist", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: song.title,
+              artist: song.artist,
+              file: song.file,
+            }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log(
+                  `Şarkı listeye eklendi: ${song.title} - ${song.artist}`
+                );
+              } else {
+                console.error("Şarkı eklenirken hata oluştu:", response.status);
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+
+        function togglePlay(buttonElement) {
+          const select = document.getElementById("searchSelect");
+          const selectedFileName = select.options[select.selectedIndex].value;
+          if (currentAudio && !currentAudio.paused) {
+            // Şu anda çalıyorsa, durdur
+            currentAudio.pause();
+            buttonElement.innerHTML = "<i class='fas fa-play'></i>"; // Butonu "çal" yap
+            return;
+          }
+
+          fetch("/get_base64_song", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ selectedFileName }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Şarkı yüklenemedi.");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const base64_mp3 = data.mp3_base64;
+              currentAudio = new Audio(`data:audio/mp3;base64,${base64_mp3}`);
+              currentAudio.play(); // Şarkıyı çal
+              buttonElement.innerHTML = "<i class='fas fa-pause'></i>"; // Butonu "durdur" yap
+            })
+            .catch((error) => console.error("Error:", error));
         }
-
-        let currentAudio = null; // Çalan şarkıyı tutmak için bir değişken
-        function playSong(songFile) {
-            // Mevcut bir şarkı çalıyorsa, önce onu durdur
-            if (currentAudio) {
-                currentAudio.pause(); // Mevcut sesi durdur
-                currentAudio.currentTime = 0; // Başlangıca dön
-            }
-
-            // Yeni ses nesnesi oluştur
-            const audio = new Audio(songFile);
-
-            // Global değişkeni yeni ses nesnesine ayarla
-            currentAudio = audio;
-
-            // Çalmaya başla
-            audio
-                .play()
-                .then(() => {
-                    console.log("Şarkı çalmaya başladı:", songFile);
-                })
-                .catch((error) => {
-                    console.error("Şarkı çalınırken bir hata oluştu:", error);
-                });
-        }
+      }
     </script>
-</body>
-
+  </body>
 </html>

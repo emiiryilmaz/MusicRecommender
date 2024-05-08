@@ -3,81 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <title>Çalma Listem</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
+      /* Temel stiller */
       body {
         background-image: url("https://variety.com/wp-content/uploads/2022/07/Music-Streaming-Wars.jpg?w=1000&h=563&crop=1");
-        font-family: Arial, sans-serif; /* Okunabilirliği artırmak için font ekleyin */
+        font-family: Arial, sans-serif;
         margin: 0;
       }
 
       /* Navbar stilleri */
       .navbar {
-        background-color: #f2ece8; /* Pastel pembe */
+        background-color: #f2ece8;
         overflow: hidden;
-        padding: 10px; /* Navbar içeriğinin kenar boşlukları */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölgelendirme */
-        position: fixed; /* Sabit navbar */
-        top: 0; /* En üstte */
-        width: 100%; /* Tam genişlik */
-        z-index: 1000; /* Navbar her zaman üstte olsun */
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
       }
 
-      /* Navbar içerisindeki linklerin stilleri */
       .navbar a {
-        float: left; /* Linkleri yan yana yerleştir */
-        color: #444; /* Yazı rengi */
-        text-align: center; /* Metni ortala */
-        padding: 10px 20px; /* Yatay ve dikey boşluklar */
-        text-decoration: none; /* Altçizgiyi kaldır */
-        font-size: 16px; /* Yazı boyutu */
-        transition: color 0.3s; /* Renk geçişi */
+        float: left;
+        color: #444;
+        text-align: center;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s;
       }
 
-      /* Linklerin hover durumundaki stilleri */
       .navbar a:hover {
-        color: #007bff; /* Mavi */
+        color: #007bff;
       }
 
-      /* Sağ taraftaki butonların stilleri */
       .navbar .right {
-        float: right; /* Sağa yasla */
+        float: right;
       }
 
       /* Çalma listesi için beyaz arka planlı container */
       .playlist-container {
         background-color: white;
-        padding: 20px; /* İç kenar boşluğu */
-        margin-top: 60px; /* Navbar'a çarpmamak için boşluk bırak */
+        padding: 20px;
+        margin-top: 60px;
         margin-left: auto;
         margin-right: auto;
-        width: 60%; /* Sayfanın ortasında olacak şekilde ayarla */
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Hafif gölgelendirme */
-        border-radius: 10px; /* Köşeleri yuvarlaklaştır */
+        width: 60%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
       }
 
       /* Liste elemanlarının stilleri */
       .song {
         display: flex;
-        justify-content: space-between; /* Elemanları sağa ve sola yerleştir */
-        align-items: center; /* Dikey ortalama */
-        padding: 10px 0; /* Üst ve alt kenar boşluğu */
-        border-bottom: 1px solid #ddd; /* Alt çizgi */
+        justify-content: space-between; /* Elemanlar arasındaki boşluğu otomatik ayarlamak için */
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
       }
 
-      /* Butonlar için stiller */
+      /* Sanatçı ismi ve diğer metinleri sola hizalamak için */
+      .song-text {
+        text-align: left; /* Metni sola hizalar */
+        flex-grow: 1; /* Esnekliğe izin verir */
+      }
+
       .button {
-        background-color: #007bff;
+        background-color: #f83232;
         color: white;
-        padding: 5px 10px;
-        text-decoration: none;
+        padding: 10px 20px;
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        margin: 5px;
       }
 
       .button:hover {
-        background-color: #0056b3; /* Buton hover rengini koyulaştır */
+        background-color: #0056b3;
       }
     </style>
   </head>
@@ -97,19 +103,26 @@
     </div>
 
     <div class="playlist-container">
-      <!-- Beyaz arka planlı container -->
       <h1>{{ username }}'ın Çalma Listesi</h1>
       <ul>
         {% if playlist %} {% for song in playlist %}
         <li class="song">
-          <strong>{{ song.title }}</strong> - {{ song.artist }}
-          <div>
-            <button class="button">Çal</button>
+          <span class="song-text">
+            <strong>{{ song.title }}</strong> - {{ song.artist }}
+          </span>
+          <div style="display: flex; justify-content: space-between">
+            <button
+              onclick="togglePlay('{{ song.file }}', this)"
+              class="button"
+            >
+              <i class="fas fa-play"></i>
+            </button>
+
             <button
               onclick="removeFromPlaylist('{{ song.file }}')"
               class="button"
             >
-              Çıkar
+              <i class="fas fa-minus"></i>
             </button>
           </div>
         </li>
@@ -118,27 +131,57 @@
         {% endif %}
       </ul>
     </div>
+    <script>
+      let currentAudio = null;
+      let currentButton = null; // Mevcut butonu tutmak için
+
+      function togglePlay(file, buttonElement) {
+        if (currentAudio && !currentAudio.paused) {
+          // Şu anda çalıyorsa, durdur
+          currentAudio.pause();
+          buttonElement.innerHTML = "<i class='fas fa-play'></i>"; // Butonu "çal" yap
+          return;
+        }
+
+        fetch("/get_base64_song", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ file }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Şarkı yüklenemedi.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const base64_mp3 = data.mp3_base64;
+            currentAudio = new Audio(`data:audio/mp3;base64,${base64_mp3}`);
+            currentAudio.play(); // Şarkıyı çal
+            buttonElement.innerHTML = "<i class='fas fa-pause'></i>"; // Butonu "durdur" yap
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+      function removeFromPlaylist(song_file) {
+        fetch("/remove_from_playlist", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ file: song_file }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message) {
+              alert(data.message);
+              location.reload();
+            } else {
+              alert(data.error);
+            }
+          });
+      }
+    </script>
   </body>
 </html>
-<script>
-  function removeFromPlaylist(song_file) {
-    fetch("/remove_from_playlist", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        file: song_file,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          alert(data.message);
-          location.reload();
-        } else {
-          alert(data.error);
-        }
-      });
-  }
-</script>
