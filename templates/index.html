@@ -159,11 +159,7 @@
           <option value="" disabled selected>Şarkıcı veya Şarkı Seçiniz</option>
         </select>
         <button type="button" onclick="showSimilarSongs()">Öner</button>
-        <button
-          type="button"
-          id="playSelectedSongButton"
-          onclick="togglePlay( this )"
-        >
+        <button type="button" onclick="playOwnSong(this)">
           <i class="fas fa-play"></i>
         </button>
         <ul class="recommendation-list" id="recommendationsList"></ul>
@@ -240,6 +236,38 @@
             });
           });
       }
+      let currentAudio = null;
+      let currentButton = null; // Mevcut butonu tutmak için
+      function playOwnSong(buttonElement) {
+        if (currentAudio && !currentAudio.paused) {
+          // Şu anda çalıyorsa, durdur
+          currentAudio.pause();
+          buttonElement.innerHTML = "<i class='fas fa-play'></i>"; // Butonu "çal" yap
+          return;
+        }
+        const select = document.getElementById("searchSelect");
+        const selectedFileName = select.options[select.selectedIndex].value;
+        fetch("/get_base64_song", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ file: selectedFileName }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Şarkı yüklenemedi.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            const base64_mp3 = data.mp3_base64;
+            currentAudio = new Audio(`data:audio/mp3;base64,${base64_mp3}`);
+            currentAudio.play(); // Şarkıyı çal
+            buttonElement.innerHTML = "<i class='fas fa-pause'></i>"; // Butonu "durdur" yap
+          })
+          .catch((error) => console.error("Error:", error));
+      }
 
       function checkLogin() {
         return fetch("/is_logged_in")
@@ -279,38 +307,6 @@
             })
             .catch((error) => console.error("Error:", error));
         });
-
-        function togglePlay(buttonElement) {
-          const select = document.getElementById("searchSelect");
-          const selectedFileName = select.options[select.selectedIndex].value;
-          if (currentAudio && !currentAudio.paused) {
-            // Şu anda çalıyorsa, durdur
-            currentAudio.pause();
-            buttonElement.innerHTML = "<i class='fas fa-play'></i>"; // Butonu "çal" yap
-            return;
-          }
-
-          fetch("/get_base64_song", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ selectedFileName }),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Şarkı yüklenemedi.");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              const base64_mp3 = data.mp3_base64;
-              currentAudio = new Audio(`data:audio/mp3;base64,${base64_mp3}`);
-              currentAudio.play(); // Şarkıyı çal
-              buttonElement.innerHTML = "<i class='fas fa-pause'></i>"; // Butonu "durdur" yap
-            })
-            .catch((error) => console.error("Error:", error));
-        }
       }
     </script>
   </body>

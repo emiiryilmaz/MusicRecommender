@@ -8,35 +8,46 @@
       body {
         /* Navbar stilleri */
         .navbar {
-          background-color: #f2ece8; /* Pastel pembe */
+          background-color: #f2ece8;
           overflow: hidden;
-          padding: 10px; /* Navbar içeriğinin kenar boşlukları */
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Gölgelendirme */
-          position: fixed; /* Sabit navbar */
-          top: 0; /* En üstte */
-          width: 100%; /* Tam genişlik */
+          padding: 10px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          position: fixed;
+          top: 0;
+          width: 100%;
         }
 
         /* Navbar içerisindeki linklerin stilleri */
         .navbar a {
-          float: left; /* Linkleri yan yana yerleştir */
-          color: #444; /* Yazı rengi */
-          text-align: center; /* Metni ortala */
-          padding: 10px 20px; /* Yatay ve dikey boşluklar */
-          text-decoration: none; /* Altçizgiyi kaldır */
-          font-size: 16px; /* Yazı boyutu */
-          transition: color 0.3s; /* Renk geçişi */
+          float: left;
+          color: #444;
+          text-align: center;
+          padding: 10px 20px;
+          text-decoration: none;
+          font-size: 16px;
+          transition: color 0.3s;
         }
 
         /* Linklerin hover durumundaki stilleri */
         .navbar a:hover {
-          color: #007bff; /* Mavi */
+          color: #007bff;
         }
 
         /* Sağ taraftaki butonların stilleri */
         .navbar .right {
-          float: right; /* Sağa yasla */
+          float: right;
+          margin-right: 20px;
         }
+
+        .navbar .right span {
+          padding: 10px 20px;
+          float: right;
+          margin-right: 20px;
+          color: #444;
+          text-align: center;
+          font-size: 16px;
+        }
+
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
